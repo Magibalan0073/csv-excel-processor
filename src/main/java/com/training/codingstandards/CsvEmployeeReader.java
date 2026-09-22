@@ -22,7 +22,11 @@ public class CsvEmployeeReader {
                 inputStream = new FileInputStream(csvPath);
             }
 
-            CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(new InputStreamReader(inputStream));
+                CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
+                    .setHeader()
+                    .setSkipHeaderRecord(true)
+                    .build();
+                CSVParser parser = csvFormat.parse(new InputStreamReader(inputStream));
             for (CSVRecord record : parser) {
                 Employee employee = new Employee();
                 employee.empId = record.get("empId");
